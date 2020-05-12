@@ -2,7 +2,9 @@ plugins {
 	id 'org.springframework.boot' version '2.2.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+
 }
+apply plugin: "jacoco"
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -18,6 +20,18 @@ dependencies {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.2
+			}
+		}
+	}
+}
+
+
 
 test {
 	useJUnitPlatform()
