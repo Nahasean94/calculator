@@ -55,7 +55,20 @@ pipeline {
           }
           stage("Deploy to staging") {
                steps {
-                    sh "docker run -d --rm -p 7070:7070 --name calculator localhost:5000/calculator"
+                    sh "docker run -d --rm -p 8765:7070 --name calculator localhost:5000/calculator"
+               }
+          }
+
+          stage("Acceptance test") {
+               steps {
+                    sleep 60
+                    sh "./acceptance_test.sh"
+               }
+          }
+
+          post {
+               always {
+                    sh "docker stop calculator"
                }
           }
      }
