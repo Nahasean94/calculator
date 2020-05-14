@@ -49,7 +49,13 @@ pipeline {
 
           stage("Docker push") {
                steps {
+                    sh "docker login localhost:5000 -u="sean" -p="stockmann2""
                     sh "docker push localhost:5000/calculator"
+               }
+          }
+          stage("Deploy to staging") {
+               steps {
+                    sh "docker run -d --rm -p 7070:7070 --name calculator localhost:5000/calculator"
                }
           }
      }
