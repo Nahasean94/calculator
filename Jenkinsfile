@@ -49,7 +49,7 @@ pipeline {
 
           stage("Docker push") {
                steps {
-                    sh "docker login localhost:5000 -u="sean" -p="stockmann2""
+                    sh "docker login localhost:5000 -u='sean' -p='stockmann2'"
                     sh "docker push localhost:5000/calculator"
                }
           }
