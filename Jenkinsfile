@@ -62,6 +62,7 @@ pipeline {
           stage("Acceptance test") {
                steps {
                     sleep 60
+                    sh 'chown -R root:jenkins .'
                     sh "./acceptance_test.sh"
                }
           }
