@@ -55,7 +55,7 @@ pipeline {
           }
           stage("Deploy to staging") {
                steps {
-                    sh "docker run -p 8765:7070 --name calculator2 localhost:5000/calculator"
+                    sh "docker run -d --rm -p 8765:7070 --name calculator3 localhost:5000/calculator"
                }
           }
 
@@ -72,6 +72,6 @@ pipeline {
 
 post {
      always {
-         sh "docker stop calculator"
+         sh "docker stop calculator3"
              }
       }
