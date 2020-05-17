@@ -55,7 +55,7 @@ pipeline {
           }
           stage("Deploy to staging") {
                steps {
-                    sh "docker run -d --rm -p 8765:7070 --name calculator4 localhost:5000/calculator"
+                    sh "docker-compose up -d"
                }
           }
 
@@ -72,7 +72,7 @@ pipeline {
 
 post {
      always {
-         sh "docker stop calculator4"
+       sh "docker-compose down"
              }
       }
 }

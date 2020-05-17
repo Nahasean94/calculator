@@ -1,0 +1,8 @@
+version: "3"
+services:
+  calculator:
+    image: localhost:5000/calculator:latest
+    ports:
+      - 7070
+  redis:
+    image: redis:latest
