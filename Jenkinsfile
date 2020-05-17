@@ -55,10 +55,8 @@ pipeline {
              }
          }
  }
-
-
 post {
     always {
         sh "docker-compose -f docker-compose.yml -f acceptance/docker-compose-acceptance.yml -p acceptance down"
     }
-}
+ }
