@@ -47,32 +47,23 @@ pipeline {
                }
           }
 
-          stage("Docker push") {
-               steps {
-                    sh "docker login localhost:5000 -u='sean' -p='stockmann2'"
-                    sh "docker push localhost:5000/calculator"
-               }
-          }
-          stage("Deploy to staging") {
-               steps {
-                    sh "docker-compose up -d"
-               }
-          }
-
-          stage("Acceptance test") {
-               steps {
-                    sleep 60
-                    sh 'chmod +x ./acceptance_test.sh'
-                    sh "./acceptance_test.sh"
-               }
-          }
-
+ stage("Acceptance test") {
+     steps {
+         sh "docker-compose -f docker-compose.yml
+                    -f acceptance/docker-compose-acceptance.yml build test"
+         sh "docker-compose -f docker-compose.yml
+                    -f acceptance/docker-compose-acceptance.yml
+                    -p acceptance up -d"
+         sh 'test $(docker wait acceptance_test_1) -eq 0'
      }
+ }
+ }
 
 
 post {
-     always {
-       sh "docker-compose down"
-             }
-      }
+    always {
+        sh "docker-compose -f docker-compose.yml
+                   -f acceptance/docker-compose-acceptance.yml
+                   -p acceptance down"
+    }
 }
